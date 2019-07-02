@@ -6,8 +6,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Component
-public class AppFilter implements Filter {
+//@Component
+public class AppDeviceFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {}
