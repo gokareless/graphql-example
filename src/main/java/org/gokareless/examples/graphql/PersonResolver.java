@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class PersonResolver implements GraphQLQueryResolver {
 
-    public List<Person> getPersons(DataFetchingEnvironment environment) {
+    public List<Person> getPersons() {
         System.out.println("Executing getPersons()...");
         return Arrays.asList(
                 Person.of("Mike"),
