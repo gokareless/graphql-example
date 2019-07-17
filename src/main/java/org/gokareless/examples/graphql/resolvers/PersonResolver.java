@@ -1,7 +1,8 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.resolvers;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import graphql.schema.DataFetchingEnvironment;
+import org.gokareless.examples.graphql.Person;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

@@ -16,7 +16,7 @@ public class AppEncodingFilter extends RequestContextFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         System.out.println("Pre-request.");
         System.out.println("SecurityContext: " + SecurityContextHolder.getContext());
-        request.setAttribute("Encoding-enabled", SecurityContextHolder.getContext() != null);
+        request.setAttribute("X-Wellsmith-Html-Safe-Strings:", SecurityContextHolder.getContext() != null);
         chain.doFilter(request, response);
         System.out.println("Post-request.");
 

@@ -1,42 +1,48 @@
 package org.gokareless.examples.graphql;
 
-import graphql.schema.DataFetchingEnvironment;
 import java.lang.reflect.Field;
 import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 @Aspect
 @Configuration
 public class EncodingAspect {
 
-//  @Autowired
-//  DataFetchingEnvironment environment;
+  public static final String ENCODING_ATTRIBUTE = "X-Wellsmith-Html-Safe-Strings:";
 
-    @AfterReturning(pointcut = "execution(* org.gokareless.examples.graphql.*.*(..))", returning = "value")
-    public void after(JoinPoint point, Object value) {
-      if (value instanceof Collection) {
-        Collection collection = (Collection) value;
-        for (Object object : collection) {
-          processFields(object);
+  @AfterReturning(pointcut = "execution(* org.gokareless.examples.graphql.resolvers.*.*(..))", returning = "value")
+  public void after(JoinPoint point, Object value) {
+    if (point.getTarget().getClass().isAnnotationPresent(Component.class)) {
+      RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+      if (requestAttributes != null && isEncodingEnabled(requestAttributes)) {
+          if (value instanceof Collection) {
+            Collection collection = (Collection) value;
+            for (Object object : collection) {
+              processFields(object);
+            }
+          } else {
+            processFields(value);
+          }
         }
-      } else {
-        processFields(value);
       }
-    }
+  }
+
+  private boolean isEncodingEnabled(RequestAttributes requestAttributes) {
+    return (boolean) requestAttributes
+        .getAttribute(ENCODING_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+  }
 
   private void processFields(Object object) {
     for (Field field : object.getClass().getDeclaredFields()) {
-      field.setAccessible(true);
       if (field.isAnnotationPresent(Encodable.class) && field.getType().equals(String.class)) {
         try {
+          field.setAccessible(true);
           field.set(object, "Encoded: " + field.get(object));
         } catch (IllegalAccessException e) {
           e.printStackTrace();
