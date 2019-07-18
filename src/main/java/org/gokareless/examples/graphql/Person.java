@@ -2,7 +2,7 @@ package org.gokareless.examples.graphql;
 
 public class Person {
 
-    @Encodable
+    @Encoded
     private String name;
 
     public static Person of(String name) {

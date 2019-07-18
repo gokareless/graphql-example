@@ -5,32 +5,37 @@ import java.util.Collection;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-@Aspect
-@Configuration
+//@Aspect
+//@Configuration
 public class EncodingAspect {
 
   public static final String ENCODING_ATTRIBUTE = "X-Wellsmith-Html-Safe-Strings:";
 
-  @AfterReturning(pointcut = "execution(* org.gokareless.examples.graphql.resolvers.*.*(..))", returning = "value")
+  @Pointcut("target(com.coxautodev.graphql.tools.GraphQLResolver)")
+  public void encoded() {
+  }
+
+  @AfterReturning(pointcut = "encoded()", returning = "value")
   public void after(JoinPoint point, Object value) {
     if (point.getTarget().getClass().isAnnotationPresent(Component.class)) {
       RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
       if (requestAttributes != null && isEncodingEnabled(requestAttributes)) {
-          if (value instanceof Collection) {
-            Collection collection = (Collection) value;
-            for (Object object : collection) {
-              processFields(object);
-            }
-          } else {
-            processFields(value);
+        if (value instanceof Collection) {
+          Collection collection = (Collection) value;
+          for (Object object : collection) {
+            processFields(object);
           }
+        } else {
+          processFields(value);
         }
       }
+    }
   }
 
   private boolean isEncodingEnabled(RequestAttributes requestAttributes) {
@@ -40,7 +45,7 @@ public class EncodingAspect {
 
   private void processFields(Object object) {
     for (Field field : object.getClass().getDeclaredFields()) {
-      if (field.isAnnotationPresent(Encodable.class) && field.getType().equals(String.class)) {
+      if (field.isAnnotationPresent(Encoded.class) && field.getType().equals(String.class)) {
         try {
           field.setAccessible(true);
           field.set(object, "Encoded: " + field.get(object));

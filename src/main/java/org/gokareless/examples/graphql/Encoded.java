@@ -6,5 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Encodable {}
+@Target({ElementType.FIELD, ElementType.TYPE})
+public @interface Encoded {}
+
