@@ -1,4 +1,4 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.aspects;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

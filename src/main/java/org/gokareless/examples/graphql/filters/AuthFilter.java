@@ -1,4 +1,4 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.filters;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

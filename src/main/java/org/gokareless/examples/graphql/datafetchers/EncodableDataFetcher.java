@@ -1,4 +1,4 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.datafetchers;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;

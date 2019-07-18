@@ -1,4 +1,4 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.filters;
 
 import com.google.common.base.Strings;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ import org.springframework.web.filter.RequestContextFilter;
 @Component
 public class EncodingFilter extends RequestContextFilter {
 
-  public static final String ENCODING_FOLTER = "X-Wellsmith-Html-Safe-Strings";
+  public static final String ENCODING_HEADER = "X-Wellsmith-Html-Safe-Strings";
 
   @Override
   public void doFilterInternal(
@@ -41,14 +40,16 @@ public class EncodingFilter extends RequestContextFilter {
 
   private void encodeResponse(HttpServletResponseWrapper responseWrapper) throws IOException {
     final String oldContent = responseWrapper.toString();
-    final String newContent = StringEscapeUtils.escapeJson(oldContent);
+    final String newContent = EscapeUtil.escapeHtml(oldContent);
     ServletResponse response = responseWrapper.getResponse();
     response.setContentLength(newContent.length());
     response.getWriter().write(newContent);
   }
 
+
+
   private boolean isEncodingHeaderPresent(final HttpServletRequest request) {
-    final String headerValue = request.getHeader(ENCODING_FOLTER);
+    final String headerValue = request.getHeader(ENCODING_HEADER);
     return !Strings.isNullOrEmpty(headerValue);
   }
 

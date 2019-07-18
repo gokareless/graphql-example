@@ -1,4 +1,6 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.dto;
+
+import org.gokareless.examples.graphql.aspects.Encoded;
 
 public class Person {
 
