@@ -1,6 +1,6 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.filters;
 
-import org.springframework.stereotype.Component;
+import org.gokareless.examples.graphql.dto.Device;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

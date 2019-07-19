@@ -1,7 +1,7 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.resolvers;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import graphql.schema.DataFetchingEnvironment;
+import org.gokareless.examples.graphql.dto.Person;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -10,10 +10,10 @@ import java.util.List;
 @Component
 public class PersonResolver implements GraphQLQueryResolver {
 
-    public List<Person> getPersons(DataFetchingEnvironment environment) {
+    public List<Person> getPersons() {
         System.out.println("Executing getPersons()...");
         return Arrays.asList(
-                Person.of("Mike"),
+                Person.of("<b onmouseover=alert('XSS_exploit_message')>Message</b>"),
                 Person.of("David"),
                 Person.of("James")
         );

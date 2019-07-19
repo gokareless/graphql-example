@@ -1,4 +1,4 @@
-package org.gokareless.examples.graphql;
+package org.gokareless.examples.graphql.dto;
 
 public enum Device {
     DESKTOP {
