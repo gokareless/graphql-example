@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextListener;
 
-@Configuration
+// @Configuration
 public class AppConfiguration {
 
-    @Bean
+    // @Bean
     public RequestContextListener requestContextListener(){
         return new RequestContextListener();
     }

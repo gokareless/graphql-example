@@ -1,4 +1,4 @@
-spring:
-  security:
-    filter:
-      order: 100
+# spring:
+#   security:
+#     filter:
+#       order: 100

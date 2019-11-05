@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.core.context.SecurityContextHolder;
+// import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.RequestContextFilter;
 
-@Order(102)
-@Component
+// @Order(102)
+// @Component
 public class EncodingFilter extends RequestContextFilter {
 
   public static final String ENCODING_HEADER = "X-Wellsmith-Html-Safe-Strings";
@@ -28,8 +28,8 @@ public class EncodingFilter extends RequestContextFilter {
       final FilterChain filterChain)
       throws IOException, ServletException {
     System.out.println("Encoding filter request");
-    System.out.println("Encoding filter: Security enabled: " + SecurityContextHolder.getContext() != null &&
-        SecurityContextHolder.getContext().getAuthentication() != null);
+    // System.out.println("Encoding filter: Security enabled: " + SecurityContextHolder.getContext() != null &&
+    //     SecurityContextHolder.getContext().getAuthentication() != null);
     HttpServletResponseWrapper responseWrapper = new StringResponseWrapper(response);
     filterChain.doFilter(request, responseWrapper);
     System.out.println("Encoding filter response");
